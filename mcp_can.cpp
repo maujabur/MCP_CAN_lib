@@ -208,7 +208,7 @@ INT8U MCP_CAN::mcp2515_setCANCTRL_Mode(const INT8U newmode)
 *********************************************************************************************************/
 INT8U MCP_CAN::mcp2515_requestNewMode(const INT8U newmode)
 {
-	byte startTime = millis();
+	long startTime = millis();
 
 	// Spam new mode request and wait for the operation  to complete
 	while(1)
@@ -220,7 +220,7 @@ INT8U MCP_CAN::mcp2515_requestNewMode(const INT8U newmode)
 		byte statReg = mcp2515_readRegister(MCP_CANSTAT);
 		if((statReg & MODE_MASK) == newmode) // We're now in the new mode
 			return MCP2515_OK;
-		else if((byte)(millis() - startTime) > 200) // Wait no more than 200ms for the operation to complete
+		else if((long)(millis() - startTime) > 200) // Wait no more than 200ms for the operation to complete
 			return MCP2515_FAIL;
 	}
 }
